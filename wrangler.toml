@@ -1,0 +1,16 @@
+name = "canido-today-api"
+main = "worker/index.ts"
+compatibility_date = "2025-01-09"
+
+# KV namespace for 30-min weather/result cache.
+# Create with: npx wrangler kv:namespace create WEATHER_CACHE
+# then paste the returned id below.
+# [[kv_namespaces]]
+# binding = "WEATHER_CACHE"
+# id = "REPLACE_ME"
+
+[vars]
+USER_AGENT = "(canido.today, contact@canido.today)"
+
+[observability]
+enabled = true

@@ -1,0 +1,28 @@
+---
+import type { ProjectStatus } from "../lib/types";
+
+interface Props {
+  status: ProjectStatus;
+  size?: "sm" | "md" | "lg";
+}
+
+const { status, size = "md" } = Astro.props;
+
+const sizeClass = {
+  sm: "h-2.5 w-2.5",
+  md: "h-3.5 w-3.5",
+  lg: "h-4 w-4",
+}[size];
+
+const colorVar = {
+  green: "var(--color-status-green)",
+  yellow: "var(--color-status-yellow)",
+  red: "var(--color-status-red)",
+}[status];
+---
+
+<span
+  class={`inline-block rounded-full ${sizeClass} ring-2 ring-white shadow-sm`}
+  style={`background-color: ${colorVar};`}
+  aria-hidden="true"
+></span>

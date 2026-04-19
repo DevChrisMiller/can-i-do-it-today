@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pour-concrete",
+    "name": "Pour Concrete",
+    "category": "concrete",
+    "icon": "🧱",
+    "description": "Pouring a concrete slab, sidewalk, patio, or driveway",
+    "rules": {
+      "temperature": { "min": 50, "max": 90, "unit": "F" },
+      "overnightLow": { "min": 40 },
+      "precipProbability": { "max": 20 },
+      "precipFreeHours": { "min": 24 },
+      "humidity": { "max": 80 },
+      "windSpeed": { "max": 25 }
+    },
+    "tips": [
+      "Pour in early morning to allow a full day of curing",
+      "Keep concrete above 50°F for 48 hours after pouring",
+      "Use curing blankets if overnight temps drop near freezing"
+    ],
+    "seoContent": "Concrete cures best between 50°F and 90°F. Hydration slows significantly below 50°F and is nearly non-existent below 40°F. Rain within the first 4–8 hours can damage the surface, and freezing before initial cure can reduce strength by up to 50%."
+  }
+]
