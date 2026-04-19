@@ -64,7 +64,11 @@ export default {
     try {
       const weather = await fetchWeather(roundCoord(lat), roundCoord(lon), env.USER_AGENT);
       const result = {
-        ...weather,
+        location: weather.location,
+        current: {
+          ...weather.current,
+          hoursUntilRain: weather.forecast.hoursUntilRain,
+        },
         projects: evaluateProjects(weather),
         fetchedAt: new Date().toISOString(),
         cacheExpiresAt: new Date(Date.now() + CACHE_TTL_SECONDS * 1000).toISOString(),

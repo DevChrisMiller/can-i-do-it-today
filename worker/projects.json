@@ -6,18 +6,763 @@
     "icon": "🧱",
     "description": "Pouring a concrete slab, sidewalk, patio, or driveway",
     "rules": {
-      "temperature": { "min": 50, "max": 90, "unit": "F" },
+      "temperature": { "min": 50, "max": 90 },
       "overnightLow": { "min": 40 },
-      "precipProbability": { "max": 20 },
-      "precipFreeHours": { "min": 24 },
       "humidity": { "max": 80 },
-      "windSpeed": { "max": 25 }
+      "windSpeed": { "max": 25 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain"]
     },
     "tips": [
       "Pour in early morning to allow a full day of curing",
       "Keep concrete above 50°F for 48 hours after pouring",
       "Use curing blankets if overnight temps drop near freezing"
-    ],
-    "seoContent": "Concrete cures best between 50°F and 90°F. Hydration slows significantly below 50°F and is nearly non-existent below 40°F. Rain within the first 4–8 hours can damage the surface, and freezing before initial cure can reduce strength by up to 50%."
+    ]
+  },
+  {
+    "id": "pour-footings-foundation",
+    "name": "Pour Footings/Foundation",
+    "category": "concrete",
+    "icon": "🏗️",
+    "description": "Pouring structural footings or a foundation",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "overnightLow": { "min": 50 },
+      "humidity": { "max": 80 },
+      "windSpeed": { "max": 25 },
+      "precipFreeHours": { "min": 48 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Footings need 48+ hours above freezing to gain structural strength",
+      "Protect with insulating blankets if overnight temps drop below 50°F",
+      "Avoid pouring into saturated soil — drain or delay"
+    ]
+  },
+  {
+    "id": "lay-brick-block",
+    "name": "Lay Brick/Block",
+    "category": "concrete",
+    "icon": "🧱",
+    "description": "Laying brick or concrete block with mortar",
+    "rules": {
+      "temperature": { "min": 40 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Mortar needs temps above 40°F to cure properly",
+      "Cover fresh work overnight if frost is possible",
+      "Keep brick moist in hot, dry weather to prevent rapid set"
+    ]
+  },
+  {
+    "id": "repoint-mortar",
+    "name": "Repoint Mortar",
+    "category": "concrete",
+    "icon": "🪨",
+    "description": "Tuck-pointing or repairing mortar joints",
+    "rules": {
+      "temperature": { "min": 40, "max": 90 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "noExtremeHeat"]
+    },
+    "tips": [
+      "Keep new joints damp for several days to slow cure",
+      "Avoid direct sun on hot days — work in shade",
+      "Pre-wet old joints so they don't pull moisture from fresh mortar"
+    ]
+  },
+  {
+    "id": "apply-stucco",
+    "name": "Apply Stucco",
+    "category": "concrete",
+    "icon": "🏚️",
+    "description": "Applying stucco coats to exterior walls",
+    "rules": {
+      "temperature": { "min": 40, "max": 90 },
+      "humidity": { "max": 80 },
+      "precipFreeHours": { "min": 48 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Keep stucco damp for the first 48 hours to prevent cracking",
+      "Avoid applying in full sun on hot, dry days",
+      "Plan for 48+ hours of dry weather after each coat"
+    ]
+  },
+  {
+    "id": "seal-driveway",
+    "name": "Seal Concrete/Driveway",
+    "category": "concrete",
+    "icon": "🛢️",
+    "description": "Applying a sealer to a concrete driveway, patio, or walk",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "surfaceDry"]
+    },
+    "tips": [
+      "Surface must be fully dry — no damp patches",
+      "Apply in morning so sealer cures before overnight dew",
+      "Keep foot traffic off for at least 24 hours"
+    ]
+  },
+  {
+    "id": "exterior-paint-latex",
+    "name": "Exterior Paint (Latex)",
+    "category": "painting",
+    "icon": "🎨",
+    "description": "Painting exterior surfaces with latex (water-based) paint",
+    "rules": {
+      "temperature": { "min": 50, "max": 85 },
+      "humidity": { "max": 85 },
+      "precipFreeHours": { "min": 6 },
+      "dewPointMargin": { "min": 5 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Latex needs the air temp at least 5°F above the dew point to form a good film",
+      "Stop 2 hours before dew sets in — evening painting invites failures",
+      "Don't paint in direct sun on hot days — paint skins too fast"
+    ]
+  },
+  {
+    "id": "exterior-paint-oil",
+    "name": "Exterior Paint (Oil-Based)",
+    "category": "painting",
+    "icon": "🖌️",
+    "description": "Painting exterior surfaces with oil-based paint",
+    "rules": {
+      "temperature": { "min": 40, "max": 90 },
+      "humidity": { "max": 80 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Oil-based paint tolerates cooler temperatures than latex",
+      "Plan for 24 hours of dry weather after the final coat",
+      "Ventilate well and wear a respirator for solvent fumes"
+    ]
+  },
+  {
+    "id": "stain-deck-oil",
+    "name": "Stain Deck (Oil-Based)",
+    "category": "painting",
+    "icon": "🪵",
+    "description": "Applying an oil-based deck stain or sealer",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "humidity": { "min": 30, "max": 70 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Apply in morning so it has all day to soak in and dry",
+      "Wood must be clean and dry — washed boards need 48 hours",
+      "Skip days with rising humidity past noon"
+    ]
+  },
+  {
+    "id": "stain-deck-water",
+    "name": "Stain Deck (Water-Based)",
+    "category": "painting",
+    "icon": "💧",
+    "description": "Applying a water-based deck stain or sealer",
+    "rules": {
+      "temperature": { "min": 50, "max": 80 },
+      "humidity": { "min": 40, "max": 70 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Water-based stains are humidity sensitive — aim for 40–70%",
+      "Back-brush to work stain into the grain",
+      "Recoat same day only if first coat is fully absorbed"
+    ]
+  },
+  {
+    "id": "stain-fence",
+    "name": "Stain/Seal Fence",
+    "category": "painting",
+    "icon": "🪵",
+    "description": "Staining or sealing a wood fence",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Work on the shady side as the sun moves across the fence",
+      "Pressure-washed fences need 48 hours to dry before staining",
+      "Two thin coats beat one heavy coat"
+    ]
+  },
+  {
+    "id": "paint-outdoor-furniture",
+    "name": "Paint Outdoor Furniture",
+    "category": "painting",
+    "icon": "🪑",
+    "description": "Painting chairs, tables, or other outdoor furniture",
+    "rules": {
+      "temperature": { "min": 50, "max": 85 },
+      "humidity": { "max": 80 },
+      "precipFreeHours": { "min": 4 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Sand and prime bare spots for lasting adhesion",
+      "Paint upside-down first to catch the undersides and joints",
+      "Light coats beat heavy coats — expect 2–3 passes"
+    ]
+  },
+  {
+    "id": "exterior-caulk",
+    "name": "Apply Exterior Caulk",
+    "category": "painting",
+    "icon": "🧴",
+    "description": "Applying exterior caulk around windows, trim, or siding",
+    "rules": {
+      "temperature": { "min": 40, "max": 80 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "surfaceDry"]
+    },
+    "tips": [
+      "Surface must be dry and clean of old, loose caulk",
+      "Tool the bead within a few minutes of applying",
+      "Check manufacturer label for temperature and cure time specifics"
+    ]
+  },
+  {
+    "id": "paint-garage-floor",
+    "name": "Paint/Epoxy Garage Floor",
+    "category": "painting",
+    "icon": "🏠",
+    "description": "Applying a floor paint or epoxy coating to a garage slab",
+    "rules": {
+      "temperature": { "min": 55, "max": 90 },
+      "humidity": { "max": 80 },
+      "flags": ["surfaceDry"]
+    },
+    "tips": [
+      "Concrete must be fully cured (30+ days) and moisture-tested",
+      "Etch or grind for proper adhesion",
+      "Keep garage ventilated — epoxy fumes linger"
+    ]
+  },
+  {
+    "id": "install-asphalt-shingles",
+    "name": "Install Asphalt Shingles",
+    "category": "roofing",
+    "icon": "🏠",
+    "description": "Installing asphalt shingles on a sloped roof",
+    "rules": {
+      "temperature": { "min": 40, "max": 85 },
+      "windSpeed": { "max": 25 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Shingles need warmth to seal — below 40°F use hand tabs or wait",
+      "Hot days soften shingles — watch for scuff marks from boots",
+      "High winds make staging dangerous — stop work at gusts above 25 mph"
+    ]
+  },
+  {
+    "id": "roof-sealant",
+    "name": "Apply Roof Sealant",
+    "category": "roofing",
+    "icon": "🏠",
+    "description": "Applying a roof sealant or coating",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Apply to clean, dry roofing — morning dew can ruin adhesion",
+      "Check the label for recoat window and overnight temperature minimums",
+      "Avoid applying right before overnight condensation forms"
+    ]
+  },
+  {
+    "id": "install-metal-roofing",
+    "name": "Install Metal Roofing",
+    "category": "roofing",
+    "icon": "🔧",
+    "description": "Installing metal roof panels",
+    "rules": {
+      "temperature": { "min": 32 },
+      "windSpeed": { "max": 30 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Metal panels act like sails — stop work in gusty wind",
+      "Mark cuts carefully; field shears leave sharp edges",
+      "Wear grippy footwear — metal gets slick with any moisture"
+    ]
+  },
+  {
+    "id": "patch-roof",
+    "name": "Patch/Tar Roof",
+    "category": "roofing",
+    "icon": "🔨",
+    "description": "Patching a roof leak with tar or flashing cement",
+    "rules": {
+      "temperature": { "min": 40, "max": 85 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Sweep debris and dry the area before applying",
+      "Layer fabric reinforcement into the wet patch for longevity",
+      "A temporary tarp is a better emergency fix than rushing a tar patch"
+    ]
+  },
+  {
+    "id": "seed-lawn-cool",
+    "name": "Seed Lawn (Cool-Season)",
+    "category": "landscaping",
+    "icon": "🌱",
+    "description": "Seeding fescue, bluegrass, or ryegrass lawns",
+    "rules": {
+      "temperature": { "min": 60, "max": 75 },
+      "flags": ["groundNotFrozen"]
+    },
+    "tips": [
+      "Light rain after seeding helps germination — avoid heavy downpours",
+      "Keep seed consistently moist for 14–21 days",
+      "Early fall is the ideal window in most zones"
+    ]
+  },
+  {
+    "id": "seed-lawn-warm",
+    "name": "Seed Lawn (Warm-Season)",
+    "category": "landscaping",
+    "icon": "🌾",
+    "description": "Seeding bermuda, zoysia, or other warm-season grasses",
+    "rules": {
+      "temperature": { "min": 75, "max": 90 },
+      "flags": ["groundNotFrozen"]
+    },
+    "tips": [
+      "Late spring to early summer is the sweet spot",
+      "Consistent moisture matters more than frequency — use light, frequent watering",
+      "Soil temps above 65°F are the real indicator"
+    ]
+  },
+  {
+    "id": "lay-sod",
+    "name": "Lay Sod",
+    "category": "landscaping",
+    "icon": "🌿",
+    "description": "Installing sod on a prepared bed",
+    "rules": {
+      "temperature": { "min": 55, "max": 70 },
+      "flags": ["groundNotFrozen", "noExtremeHeat"]
+    },
+    "tips": [
+      "Water sod within 30 minutes of laying — it dries out fast",
+      "Stagger seams like bricks and roll the new lawn to press out air",
+      "Keep foot traffic off for two weeks"
+    ]
+  },
+  {
+    "id": "apply-fertilizer",
+    "name": "Apply Fertilizer",
+    "category": "landscaping",
+    "icon": "🌿",
+    "description": "Applying granular or liquid fertilizer to a lawn",
+    "rules": {
+      "temperature": { "min": 55, "max": 85 },
+      "flags": ["groundNotFrozen"]
+    },
+    "tips": [
+      "A light rain within 24 hours helps wash granules into soil",
+      "Skip if heavy rain is forecast — fertilizer runoff pollutes waterways",
+      "Don't apply to drought-stressed, dormant lawns"
+    ]
+  },
+  {
+    "id": "apply-herbicide",
+    "name": "Apply Herbicide",
+    "category": "landscaping",
+    "icon": "🌾",
+    "description": "Spraying herbicide on weeds",
+    "rules": {
+      "temperature": { "min": 60, "max": 85 },
+      "windSpeed": { "max": 10 },
+      "precipFreeHours": { "min": 6 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Drift damages neighboring plants — hold off if gusts exceed 10 mph",
+      "Most products need 4–6 dry hours to absorb",
+      "Morning applications avoid midday heat stress on weeds"
+    ]
+  },
+  {
+    "id": "apply-pesticide",
+    "name": "Apply Pesticide",
+    "category": "landscaping",
+    "icon": "🐛",
+    "description": "Spraying pesticide on plants or a lawn",
+    "rules": {
+      "temperature": { "min": 60, "max": 85 },
+      "windSpeed": { "max": 10 },
+      "precipFreeHours": { "min": 6 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Spray in the cooler parts of the day to protect pollinators",
+      "Read the label — rainfast times vary widely between products",
+      "Wear the PPE the label calls for, every time"
+    ]
+  },
+  {
+    "id": "plant-trees",
+    "name": "Plant Trees/Shrubs",
+    "category": "landscaping",
+    "icon": "🌳",
+    "description": "Planting balled-and-burlapped or container trees and shrubs",
+    "rules": {
+      "temperature": { "min": 35 },
+      "flags": ["groundNotFrozen", "noExtremeHeat"]
+    },
+    "tips": [
+      "Dig the hole twice as wide as the root ball, same depth",
+      "Water deeply the first season — the roots haven't found their own supply",
+      "Mulch 2–3 inches around the base, pulled back from the trunk"
+    ]
+  },
+  {
+    "id": "mulch-garden",
+    "name": "Mulch Garden Beds",
+    "category": "landscaping",
+    "icon": "🍂",
+    "description": "Spreading mulch around beds and borders",
+    "rules": {
+      "temperature": { "min": 32 },
+      "windSpeed": { "max": 25 },
+      "flags": ["soilNotWaterlogged"]
+    },
+    "tips": [
+      "2–3 inches is enough — deeper mulch smothers roots",
+      "Pull mulch back a few inches from stems and trunks",
+      "Windy days turn fine mulch into a mess"
+    ]
+  },
+  {
+    "id": "aerate-lawn",
+    "name": "Aerate Lawn",
+    "category": "landscaping",
+    "icon": "🌱",
+    "description": "Core aerating a lawn to relieve compaction",
+    "rules": {
+      "temperature": { "min": 50, "max": 80 },
+      "flags": ["groundNotFrozen", "soilNotWaterlogged"]
+    },
+    "tips": [
+      "Soil should be moist — not saturated, not bone dry",
+      "Water the day before for best plug pull depth",
+      "Aerate in the active growing season so the lawn heals quickly"
+    ]
+  },
+  {
+    "id": "install-wood-fence",
+    "name": "Install Wood Fence",
+    "category": "construction",
+    "icon": "🏡",
+    "description": "Building a wood fence with set posts",
+    "rules": {
+      "temperature": { "min": 40 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Post concrete needs above-freezing temps for a full 48 hours",
+      "Set posts plumb and brace them until the concrete cures",
+      "Leave expansion gaps between pickets for wet weather"
+    ]
+  },
+  {
+    "id": "build-deck",
+    "name": "Build Deck Structure",
+    "category": "construction",
+    "icon": "🪵",
+    "description": "Framing a deck with joists and beams",
+    "rules": {
+      "temperature": { "min": 32 },
+      "windSpeed": { "max": 30 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Pressure-treated lumber is heavy when wet — stage it under cover",
+      "Use hot-dip galvanized or stainless fasteners for modern PT lumber",
+      "Check joist hangers with the specified nails, not deck screws"
+    ]
+  },
+  {
+    "id": "install-composite-decking",
+    "name": "Install Composite Decking",
+    "category": "construction",
+    "icon": "🔩",
+    "description": "Installing composite or PVC deck boards",
+    "rules": {
+      "temperature": { "min": 40 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Composites expand and contract with temperature — leave the manufacturer's gap",
+      "Pre-drill ends to prevent mushrooming",
+      "Boards are dark and hot in the sun — mind your tool parts"
+    ]
+  },
+  {
+    "id": "outdoor-wood-glue",
+    "name": "Outdoor Wood Gluing",
+    "category": "construction",
+    "icon": "🪚",
+    "description": "Gluing wood joints outdoors with exterior-rated adhesive",
+    "rules": {
+      "temperature": { "min": 50, "max": 80 },
+      "humidity": { "min": 40, "max": 60 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Use Type II or Type III exterior wood glue",
+      "Clamp for at least 30 minutes, leave overnight before stress",
+      "Wipe squeeze-out immediately — dry glue resists stain"
+    ]
+  },
+  {
+    "id": "seal-asphalt",
+    "name": "Seal Asphalt Driveway",
+    "category": "paving",
+    "icon": "🛣️",
+    "description": "Applying a sealcoat to an asphalt driveway",
+    "rules": {
+      "temperature": { "min": 50 },
+      "humidity": { "max": 90 },
+      "precipFreeHours": { "min": 48 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Driveway surface must be 50°F+ for 24 hours before and after",
+      "Fill cracks and clean oil stains before sealing",
+      "Plan for 48 hours of dry, above-freezing weather"
+    ]
+  },
+  {
+    "id": "asphalt-paving",
+    "name": "Asphalt Paving",
+    "category": "paving",
+    "icon": "🚧",
+    "description": "Laying hot-mix asphalt",
+    "rules": {
+      "temperature": { "min": 50 },
+      "flags": ["noActiveRain", "groundNotFrozen"]
+    },
+    "tips": [
+      "Hot-mix temps drop fast — coordinate loads and crew",
+      "Compact before the mix falls below 185°F",
+      "Don't pave over wet or frozen base material"
+    ]
+  },
+  {
+    "id": "lay-pavers",
+    "name": "Lay Pavers",
+    "category": "paving",
+    "icon": "🧱",
+    "description": "Installing concrete or stone pavers",
+    "rules": {
+      "flags": ["noActiveRain", "groundNotFrozen"]
+    },
+    "tips": [
+      "Screed a flat, compacted sand bed — small errors multiply",
+      "Cut edges with a wet saw and dust mask",
+      "Sweep polymeric sand only on a dry forecast day"
+    ]
+  },
+  {
+    "id": "wash-wax-car",
+    "name": "Wash & Wax Car",
+    "category": "automotive",
+    "icon": "🚗",
+    "description": "Washing and waxing a car outdoors",
+    "rules": {
+      "temperature": { "min": 50, "max": 80 },
+      "windSpeed": { "max": 15 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Wash in shade — direct sun bakes soap into streaks",
+      "Dry panel by panel to avoid water spots",
+      "Apply wax in thin coats on a cool surface"
+    ]
+  },
+  {
+    "id": "spray-paint-outdoor",
+    "name": "Spray Paint (Outdoor)",
+    "category": "automotive",
+    "icon": "🧴",
+    "description": "Outdoor spray painting — cans or HVLP",
+    "rules": {
+      "temperature": { "min": 50, "max": 90 },
+      "humidity": { "max": 65 },
+      "windSpeed": { "max": 15 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Overspray drifts farther than you'd guess — mask neighboring surfaces",
+      "Warm the can in your hand (not hot water) for smoother flow",
+      "Hold 8–12 inches off the surface and keep the can moving"
+    ]
+  },
+  {
+    "id": "transplant-seedlings",
+    "name": "Transplant Seedlings",
+    "category": "garden",
+    "icon": "🌱",
+    "description": "Moving seedlings from trays into the garden",
+    "rules": {
+      "temperature": { "min": 50, "max": 75 },
+      "flags": ["noFreezingOvernight"]
+    },
+    "tips": [
+      "Harden off for 7–10 days before transplanting",
+      "Move seedlings on overcast afternoons to reduce shock",
+      "Water in immediately with a gentle stream"
+    ]
+  },
+  {
+    "id": "spray-fungicide",
+    "name": "Spray Fungicide",
+    "category": "garden",
+    "icon": "🍄",
+    "description": "Applying a fungicide to plants",
+    "rules": {
+      "temperature": { "min": 60, "max": 85 },
+      "windSpeed": { "max": 10 },
+      "precipFreeHours": { "min": 6 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Apply before symptoms spread — fungicides are mostly preventative",
+      "Coat both sides of the leaves",
+      "Rotate active ingredients to avoid resistance"
+    ]
+  },
+  {
+    "id": "prune-trees",
+    "name": "Prune Trees/Shrubs",
+    "category": "garden",
+    "icon": "✂️",
+    "description": "Pruning trees or shrubs",
+    "rules": {
+      "temperature": { "min": 32 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Wet conditions spread disease through open cuts — skip rainy days",
+      "Sanitize pruners between plants, especially with any fungal concern",
+      "Make cuts just outside the branch collar"
+    ]
+  },
+  {
+    "id": "till-garden",
+    "name": "Start Garden Bed / Till",
+    "category": "garden",
+    "icon": "🌱",
+    "description": "Tilling a new bed or turning a garden over",
+    "rules": {
+      "temperature": { "min": 40 },
+      "flags": ["soilNotWaterlogged", "groundNotFrozen"]
+    },
+    "tips": [
+      "Squeeze a handful of soil — if it holds a ball and oozes water, wait",
+      "Till in compost while turning for an instant amendment",
+      "Work in multiple shallow passes rather than one deep one"
+    ]
+  },
+  {
+    "id": "power-wash",
+    "name": "Power Wash House/Deck",
+    "category": "misc",
+    "icon": "💦",
+    "description": "Power washing siding, decks, or walkways",
+    "rules": {
+      "temperature": { "min": 40 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Surfaces need 24+ hours to dry before painting or staining",
+      "Use the widest tip that does the job — narrow tips cut wood",
+      "Never spray up under siding — water gets trapped behind"
+    ]
+  },
+  {
+    "id": "clean-gutters",
+    "name": "Clean Gutters",
+    "category": "misc",
+    "icon": "🍂",
+    "description": "Cleaning out gutters and downspouts",
+    "rules": {
+      "windSpeed": { "max": 20 },
+      "flags": ["noActiveRain", "noLightning"]
+    },
+    "tips": [
+      "A sturdy ladder with standoff arms is safer than leaning on the gutter",
+      "Flush downspouts with a hose after clearing",
+      "Never climb in gusty wind — reschedule"
+    ]
+  },
+  {
+    "id": "install-outdoor-lighting",
+    "name": "Install Outdoor Lighting",
+    "category": "misc",
+    "icon": "💡",
+    "description": "Installing exterior or landscape lighting",
+    "rules": {
+      "temperature": { "min": 32 },
+      "flags": ["noActiveRain"]
+    },
+    "tips": [
+      "Kill power at the breaker — a tester is a few dollars",
+      "Use weatherproof connections at every splice",
+      "Test circuits before burying low-voltage wire"
+    ]
+  },
+  {
+    "id": "resurface-pool",
+    "name": "Resurface Pool",
+    "category": "misc",
+    "icon": "🏊",
+    "description": "Plastering, painting, or resurfacing a pool interior",
+    "rules": {
+      "temperature": { "min": 50, "max": 80 },
+      "precipFreeHours": { "min": 72 },
+      "flags": ["noFreezingOvernight"]
+    },
+    "tips": [
+      "Plaster pools need to be refilled within hours of finishing",
+      "Plan for 72+ hours of mild, dry weather",
+      "Cover the pool overnight if dew or cool temps are expected"
+    ]
+  },
+  {
+    "id": "set-fence-posts",
+    "name": "Set Fence Posts (Concrete)",
+    "category": "construction",
+    "icon": "🪵",
+    "description": "Setting fence posts in concrete footings",
+    "rules": {
+      "temperature": { "min": 40, "max": 85 },
+      "precipFreeHours": { "min": 24 },
+      "flags": ["noActiveRain", "noFreezingOvernight"]
+    },
+    "tips": [
+      "Brace posts plumb and leave bracing for at least 24 hours",
+      "Dome the top of the concrete to shed water away from the post",
+      "Mix bagged concrete slightly stiff — too wet weakens the set"
+    ]
   }
 ]
