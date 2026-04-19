@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://canido.today/sitemap.xml
+Sitemap: https://canidoit.today/sitemap.xml

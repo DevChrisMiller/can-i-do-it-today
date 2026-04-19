@@ -3,7 +3,7 @@ import preact from '@astrojs/preact';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://canido.today',
+  site: 'https://canidoit.today',
   integrations: [preact()],
   vite: {
     plugins: [tailwindcss()],

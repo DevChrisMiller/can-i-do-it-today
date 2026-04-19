@@ -1,8 +1,8 @@
-# CanIDo.today — Project Specification
+# CanIDoIt.today — Project Specification
 
 ## What This Is
 
-CanIDo.today is a free website that answers one question: **"Can I do this outdoor project today?"**
+CanIDoIt.today is a free website that answers one question: **"Can I do this outdoor project today?"**
 
 A user enters their zip code (or allows geolocation), and the site shows a dashboard of 45+ outdoor home projects — each with a green/yellow/red indicator based on current and forecasted weather conditions. No login. No app install. Just instant, actionable answers.
 
@@ -20,7 +20,7 @@ No product like this currently exists. People currently Google "can I pour concr
 - **Caching**: Cloudflare KV or in-memory cache in the Worker (30-minute TTL keyed by rounded lat/lon)
 - **Database**: None at launch
 - **Hosting**: Cloudflare Pages (frontend) + Cloudflare Workers (API)
-- **Domain**: canido.today (or similar — TBD)
+- **Domain**: canidoit.today
 
 Total infrastructure cost: $0 (all free tiers).
 
@@ -52,7 +52,7 @@ The weather.gov API is a two-step process:
 
 Also fetch the standard forecast endpoint for the 7-day narrative forecast.
 
-**Important**: weather.gov requires a User-Agent header identifying your app. Use `User-Agent: (canido.today, contact@canido.today)`.
+**Important**: weather.gov requires a User-Agent header identifying your app. Use `User-Agent: (canidoit.today, contact@canidoit.today)`.
 
 ---
 
@@ -257,7 +257,7 @@ Here are all 45 projects with their weather rules:
 
 ```
 ┌─────────────────────────────┐
-│  CanIDo.today               │
+│  CanIDoIt.today             │
 │  📍 Canton, OH  [Change]    │
 │  72°F · Partly Cloudy       │
 │  Humidity 45% · Wind 8mph   │
@@ -457,7 +457,7 @@ Example products per project:
 ## File Structure (Suggested)
 
 ```
-canido-today/
+canidoit-today/
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── package.json

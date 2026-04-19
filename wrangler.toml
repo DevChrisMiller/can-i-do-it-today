@@ -1,4 +1,4 @@
-name = "canido-today-api"
+name = "canidoit-today-api"
 main = "worker/index.ts"
 compatibility_date = "2025-01-09"
 
@@ -10,7 +10,7 @@ compatibility_date = "2025-01-09"
 # id = "REPLACE_ME"
 
 [vars]
-USER_AGENT = "(canido.today, contact@canido.today)"
+USER_AGENT = "(canidoit.today, contact@canidoit.today)"
 
 [observability]
 enabled = true
