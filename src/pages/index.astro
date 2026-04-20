@@ -1,55 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import WeatherSummary from "../components/WeatherSummary.astro";
-import FilterBar from "../components/FilterBar.astro";
-import StatusSection from "../components/StatusSection.astro";
-import { MOCK_CHECK } from "../lib/mock-data";
-import type { ProjectCategory } from "../lib/types";
-
-const { location, current, projects } = MOCK_CHECK;
-
-const green = projects.filter((p) => p.status === "green");
-const yellow = projects.filter((p) => p.status === "yellow");
-const red = projects.filter((p) => p.status === "red");
-
-const categories = Array.from(
-  new Set(projects.map((p) => p.category)),
-) as ProjectCategory[];
+import { Dashboard } from "../components/Dashboard";
 ---
 
-<BaseLayout title={`Can I do it today in ${location.city}, ${location.state}?`}>
-  <WeatherSummary location={location} current={current} />
-  <FilterBar categories={categories} />
-
-  <main class="mx-auto max-w-3xl pb-16">
-    <StatusSection
-      status="green"
-      heading="Good to go"
-      subheading="all conditions met"
-      projects={green}
-    />
-    <StatusSection
-      status="yellow"
-      heading="Use caution"
-      subheading="watch the window"
-      projects={yellow}
-    />
-    <StatusSection
-      status="red"
-      heading="Not today"
-      subheading="come back later"
-      projects={red}
-    />
-  </main>
+<BaseLayout title="CanIDoIt.today — weather-aware outdoor projects">
+  <Dashboard client:load />
 
   <footer class="border-t border-[var(--color-border)] bg-white">
     <div class="mx-auto max-w-3xl px-5 py-6 text-xs text-[var(--color-ink-subtle)]">
       <p>
         Weather data from <a class="underline hover:text-[var(--color-ink-muted)]" href="https://www.weather.gov">weather.gov</a>.
         Not a substitute for manufacturer instructions or professional judgment.
-      </p>
-      <p class="mt-2">
-        Showing <strong>mock data</strong> — live results wire up next.
       </p>
     </div>
   </footer>

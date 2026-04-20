@@ -1,10 +1,22 @@
+import type { KVNamespace } from "@cloudflare/workers-types";
 import { fetchWeather } from "./weather";
+import type { CurrentConditions, Location } from "./weather";
 import { getCached, setCached } from "./cache";
 import { evaluateProjects } from "./rules";
+import type { EvaluatedProject } from "./rules";
+import { geocodeZip } from "./geocode";
 
 export interface Env {
   WEATHER_CACHE?: KVNamespace;
   USER_AGENT: string;
+}
+
+export interface CheckResult {
+  location: Location;
+  current: CurrentConditions & { hoursUntilRain: number | null };
+  projects: EvaluatedProject[];
+  fetchedAt: string;
+  cacheExpiresAt: string;
 }
 
 const CACHE_TTL_SECONDS = 30 * 60;
@@ -42,6 +54,20 @@ export default {
       return json({ ok: true });
     }
 
+    if (url.pathname === "/api/geocode") {
+      const zip = url.searchParams.get("zip");
+      if (!zip) {
+        return json({ error: "zip query param is required" }, 400);
+      }
+      try {
+        const result = await geocodeZip(zip, env);
+        return json(result);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+        return json({ error: message }, 400);
+      }
+    }
+
     if (url.pathname !== "/api/check") {
       return json({ error: "Not found" }, 404);
     }
@@ -56,14 +82,19 @@ export default {
 
     const cacheKey = `v1:${roundCoord(lat)}:${roundCoord(lon)}`;
 
-    const cached = await getCached(env, cacheKey);
+    const cached = await getCached<CheckResult>(env, cacheKey);
     if (cached) {
       return json(filterProject(cached, projectFilter));
     }
 
     try {
-      const weather = await fetchWeather(roundCoord(lat), roundCoord(lon), env.USER_AGENT);
-      const result = {
+      const weather = await fetchWeather(
+        roundCoord(lat),
+        roundCoord(lon),
+        env.USER_AGENT,
+        env,
+      );
+      const result: CheckResult = {
         location: weather.location,
         current: {
           ...weather.current,

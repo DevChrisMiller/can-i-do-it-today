@@ -224,7 +224,7 @@ function evalPrecipFreeHours(
 
   return {
     key: "precipFreeHours",
-    label: "Rain forecast",
+    label: "Next rain",
     value: valueLabel,
     requirement: `${rule.min ?? 0}h dry`,
     status,
@@ -258,7 +258,7 @@ function evalFlag(flag: FlagId, weather: NormalizedWeather): RuleDetail {
       const raining = weather.current.isRaining;
       return {
         key: "noActiveRain",
-        label: "Active rain",
+        label: "Right now",
         value: raining ? "Raining now" : "Dry",
         requirement: "No active rain",
         status: raining ? "red" : "green",
