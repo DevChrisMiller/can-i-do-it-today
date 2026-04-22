@@ -8,7 +8,6 @@ import { geocodeZip } from "./geocode";
 
 export interface Env {
   WEATHER_CACHE?: KVNamespace;
-  USER_AGENT: string;
 }
 
 export interface CheckResult {

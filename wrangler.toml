@@ -2,15 +2,14 @@ name = "canidoit-today-api"
 main = "worker/index.ts"
 compatibility_date = "2025-01-09"
 
-# KV namespace for 30-min weather/result cache.
-# Create with: npx wrangler kv:namespace create WEATHER_CACHE
-# then paste the returned id below.
-# [[kv_namespaces]]
-# binding = "WEATHER_CACHE"
-# id = "REPLACE_ME"
-
-[vars]
-USER_AGENT = "(canidoit.today, contact@canidoit.today)"
+[[kv_namespaces]]
+binding = "WEATHER_CACHE"
+id = "4b28e49138354b33839938465c7e49ee"
 
 [observability]
 enabled = true
+
+# Production route. Pages serves everything else on canidoit.today.
+[[routes]]
+pattern = "canidoit.today/api/*"
+zone_name = "canidoit.today"

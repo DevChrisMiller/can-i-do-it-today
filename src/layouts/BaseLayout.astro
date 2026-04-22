@@ -44,6 +44,14 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
     />
     <title>{title}</title>
+
+    <!-- Cloudflare Web Analytics. Replace TOKEN after connecting Pages. -->
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "REPLACE_WITH_CF_ANALYTICS_TOKEN"}'
+    ></script>
   </head>
   <body class="bg-[var(--color-canvas)] text-[var(--color-ink)]">
     <slot />
