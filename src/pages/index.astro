@@ -4,12 +4,14 @@ import { Dashboard } from "../components/Dashboard";
 ---
 
 <BaseLayout title="CanIDoIt.today — weather-aware outdoor projects">
-  <Dashboard client:load />
+  <div class="flex-1">
+    <Dashboard client:load />
+  </div>
 
   <footer class="border-t border-[var(--color-border)] bg-white">
     <div class="mx-auto max-w-3xl px-5 py-6 text-xs text-[var(--color-ink-subtle)]">
       <p>
-        Weather data from <a class="underline hover:text-[var(--color-ink-muted)]" href="https://www.weather.gov">weather.gov</a>.
+        Weather data from <a class="underline hover:text-[var(--color-ink-muted)]" href="https://open-meteo.com">Open-Meteo</a>.
         Not a substitute for manufacturer instructions or professional judgment.
       </p>
     </div>

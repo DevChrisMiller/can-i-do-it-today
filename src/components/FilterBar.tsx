@@ -34,22 +34,20 @@ export function FilterBar({
           />
         </label>
 
-        <div class="mt-3 -mx-5 overflow-x-auto px-5">
-          <div class="flex gap-2 pb-1">
+        <div class="mt-3 flex flex-wrap gap-1.5">
+          <FilterChip
+            active={category === "all"}
+            label="All"
+            onClick={() => onCategoryChange("all")}
+          />
+          {categories.map((cat) => (
             <FilterChip
-              active={category === "all"}
-              label="All"
-              onClick={() => onCategoryChange("all")}
+              key={cat}
+              active={category === cat}
+              label={CATEGORY_LABELS[cat]}
+              onClick={() => onCategoryChange(cat)}
             />
-            {categories.map((cat) => (
-              <FilterChip
-                key={cat}
-                active={category === cat}
-                label={CATEGORY_LABELS[cat]}
-                onClick={() => onCategoryChange(cat)}
-              />
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -65,7 +63,7 @@ function FilterChip({
   label: string;
   onClick: () => void;
 }) {
-  const base = "whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium";
+  const base = "rounded-full px-3 py-1.5 text-xs font-medium";
   const styles = active
     ? "bg-[var(--color-brand)] text-white"
     : "border border-[var(--color-border)] bg-white text-[var(--color-ink-muted)] hover:border-[var(--color-brand)] hover:text-[var(--color-ink)]";
