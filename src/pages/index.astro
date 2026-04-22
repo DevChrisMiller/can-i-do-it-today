@@ -3,17 +3,71 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Dashboard } from "../components/Dashboard";
 ---
 
-<BaseLayout title="CanIDoIt.today — weather-aware outdoor projects">
+<BaseLayout title="CanIDoIt.today · weather-aware outdoor projects">
   <div class="flex-1">
     <Dashboard client:load />
   </div>
 
   <footer class="border-t border-[var(--color-border)] bg-white">
-    <div class="mx-auto max-w-3xl px-5 py-6 text-xs text-[var(--color-ink-subtle)]">
-      <p>
-        Weather data from <a class="underline hover:text-[var(--color-ink-muted)]" href="https://open-meteo.com">Open-Meteo</a>.
-        Not a substitute for manufacturer instructions or professional judgment.
-      </p>
+    <div class="mx-auto max-w-3xl px-5 py-8 text-xs text-[var(--color-ink-muted)]">
+      <div class="grid gap-6 sm:grid-cols-3">
+        <div>
+          <h3 class="font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-ink)]">
+            CanIDoIt.today
+          </h3>
+          <p class="mt-2">
+            Instant weather checks for 45+ outdoor home projects.
+            Made for DIYers, landscapers, and anyone tired of guessing.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-ink)]">
+            How it works
+          </h3>
+          <p class="mt-2">
+            We evaluate current conditions and the 7-day forecast against
+            per-project rules for temperature, humidity, wind, dew point,
+            and rainfall. Data refreshes every 30 minutes.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-ink)]">
+            Credits
+          </h3>
+          <ul class="mt-2 flex flex-col gap-1">
+            <li>
+              Weather:
+              <a class="underline hover:text-[var(--color-ink)]" href="https://open-meteo.com">Open-Meteo</a>
+            </li>
+            <li>
+              Geocoding:
+              <a class="underline hover:text-[var(--color-ink)]" href="https://www.zippopotam.us">Zippopotam</a>
+              &
+              <a class="underline hover:text-[var(--color-ink)]" href="https://www.bigdatacloud.com">BigDataCloud</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-1 border-t border-[var(--color-border)] pt-4 text-[11px] text-[var(--color-ink-subtle)] sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          Not a substitute for manufacturer instructions or professional
+          judgment. Always check product labels and local conditions.
+        </p>
+        <p>
+          Built by
+          <a
+            class="underline hover:text-[var(--color-ink)]"
+            href="https://github.com/DevChrisMiller"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            DevChrisMiller
+          </a>
+        </p>
+      </div>
     </div>
   </footer>
 </BaseLayout>

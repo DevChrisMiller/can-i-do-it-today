@@ -6,7 +6,14 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Instant answers on whether today's weather works for 45+ outdoor projects." } = Astro.props;
+const {
+  title,
+  description = "Instant answers on whether today's weather works for 45+ outdoor projects.",
+} = Astro.props;
+
+const siteUrl = "https://canidoit.today";
+const ogImage = `${siteUrl}/og-image.svg`;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!doctype html>
@@ -16,7 +23,20 @@ const { title, description = "Instant answers on whether today's weather works f
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#2d3b4a" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="CanIDoIt.today" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
