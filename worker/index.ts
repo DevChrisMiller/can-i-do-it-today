@@ -91,7 +91,6 @@ export default {
       const weather = await fetchWeather(
         roundCoord(lat),
         roundCoord(lon),
-        env.USER_AGENT,
         env,
       );
       const result: CheckResult = {
