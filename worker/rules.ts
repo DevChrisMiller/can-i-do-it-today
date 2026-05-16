@@ -663,11 +663,112 @@ export function evaluateProject(
 }
 
 // ---------------------------------------------------------------------------
+// Seasonal variants (seed-lawn: cool vs warm grass by latitude + month)
+// ---------------------------------------------------------------------------
+
+interface SeasonalVariant {
+  name: string;
+  description: string;
+  rules: ProjectRules;
+  tips: string[];
+  months: Set<number>; // 1–12, calendar months when seeding works
+  seasonLabel: string;
+}
+
+// USDA transition zone sits ~35–37°N. Single threshold keeps the heuristic simple.
+const COOL_WARM_LAT_THRESHOLD = 36;
+
+const SEED_LAWN_VARIANTS: Record<"cool" | "warm", SeasonalVariant> = {
+  cool: {
+    name: "Seed Lawn (Cool-Season)",
+    description: "Seeding fescue, bluegrass, or ryegrass lawns",
+    rules: { temperature: { min: 60, max: 75 }, flags: ["groundNotFrozen"] },
+    tips: [
+      "Light rain after seeding helps germination — avoid heavy downpours",
+      "Keep seed consistently moist for 14–21 days",
+      "Early fall is the ideal window in most zones",
+    ],
+    months: new Set([3, 4, 5, 8, 9, 10]),
+    seasonLabel: "early fall or spring",
+  },
+  warm: {
+    name: "Seed Lawn (Warm-Season)",
+    description: "Seeding bermuda, zoysia, or other warm-season grasses",
+    rules: { temperature: { min: 75, max: 90 }, flags: ["groundNotFrozen"] },
+    tips: [
+      "Late spring to early summer is the sweet spot",
+      "Consistent moisture matters more than frequency — light and frequent",
+      "Soil temps above 65°F are the real indicator",
+    ],
+    months: new Set([4, 5, 6, 7]),
+    seasonLabel: "late spring through early summer",
+  },
+};
+
+function currentLocalMonth(weather: NormalizedWeather): number {
+  // Hourly times come back in the location's local zone (timezone=auto).
+  const sample = weather.hourly[0]?.startTime;
+  if (sample) {
+    const m = Number(sample.slice(5, 7));
+    if (m >= 1 && m <= 12) return m;
+  }
+  return new Date().getUTCMonth() + 1;
+}
+
+function evaluateSeedLawn(
+  def: ProjectDefinition,
+  weather: NormalizedWeather,
+): EvaluatedProject {
+  const variant =
+    weather.location.lat >= COOL_WARM_LAT_THRESHOLD
+      ? SEED_LAWN_VARIANTS.cool
+      : SEED_LAWN_VARIANTS.warm;
+
+  const adjustedDef: ProjectDefinition = {
+    ...def,
+    name: variant.name,
+    description: variant.description,
+    rules: variant.rules,
+    tips: variant.tips,
+  };
+
+  const evaluated = evaluateProject(adjustedDef, weather);
+
+  const month = currentLocalMonth(weather);
+  if (!variant.months.has(month)) {
+    const seasonDetail: RuleDetail = {
+      key: "season",
+      label: "Season",
+      value: "Off-season",
+      requirement: `Best in ${variant.seasonLabel}`,
+      status: "yellow",
+      reason: `Off-season for this grass — best results in ${variant.seasonLabel}`,
+    };
+    const nextDetails = [seasonDetail, ...evaluated.details].sort(
+      (a, b) => STATUS_RANK[b.status] - STATUS_RANK[a.status],
+    );
+    const overall = worstStatus(nextDetails.map((d) => d.status));
+    return {
+      ...evaluated,
+      details: nextDetails,
+      status: overall,
+      statusLabel: STATUS_LABEL[overall],
+      reason: formatOverallReason(nextDetails, weather),
+    };
+  }
+
+  return evaluated;
+}
+
+// ---------------------------------------------------------------------------
 // Evaluate all projects
 // ---------------------------------------------------------------------------
 
 export function evaluateProjects(
   weather: NormalizedWeather,
 ): EvaluatedProject[] {
-  return PROJECT_DEFINITIONS.map((def) => evaluateProject(def, weather));
+  return PROJECT_DEFINITIONS.map((def) => {
+    if (def.id === "seed-lawn") return evaluateSeedLawn(def, weather);
+    return evaluateProject(def, weather);
+  });
 }

@@ -337,37 +337,20 @@
     ]
   },
   {
-    "id": "seed-lawn-cool",
-    "name": "Seed Lawn (Cool-Season)",
+    "id": "seed-lawn",
+    "name": "Seed Lawn",
     "category": "landscaping",
     "icon": "🌱",
-    "description": "Seeding fescue, bluegrass, or ryegrass lawns",
-    "keywords": ["seed lawn", "grass seed", "lawn seed", "overseed", "fescue", "bluegrass", "ryegrass", "yard", "cool season"],
+    "description": "Seeding a lawn — variety and season depend on your region",
+    "keywords": ["seed lawn", "grass seed", "lawn seed", "overseed", "fescue", "bluegrass", "ryegrass", "bermuda", "zoysia", "yard", "new grass"],
     "rules": {
-      "temperature": { "min": 60, "max": 75 },
+      "temperature": { "min": 60, "max": 85 },
       "flags": ["groundNotFrozen"]
     },
     "tips": [
-      "Light rain after seeding helps germination — avoid heavy downpours",
+      "Soil temps above 55°F are the real indicator",
       "Keep seed consistently moist for 14–21 days",
-      "Early fall is the ideal window in most zones"
-    ]
-  },
-  {
-    "id": "seed-lawn-warm",
-    "name": "Seed Lawn (Warm-Season)",
-    "category": "landscaping",
-    "icon": "🌾",
-    "description": "Seeding bermuda, zoysia, or other warm-season grasses",
-    "keywords": ["seed lawn", "grass seed", "lawn seed", "overseed", "bermuda", "zoysia", "yard", "warm season"],
-    "rules": {
-      "temperature": { "min": 75, "max": 90 },
-      "flags": ["groundNotFrozen"]
-    },
-    "tips": [
-      "Late spring to early summer is the sweet spot",
-      "Consistent moisture matters more than frequency — use light, frequent watering",
-      "Soil temps above 65°F are the real indicator"
+      "Cool-season grasses in the north, warm-season in the south"
     ]
   },
   {
