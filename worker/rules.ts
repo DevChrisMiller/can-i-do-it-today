@@ -210,17 +210,31 @@ function evalWindSpeed(wind: number, rule: RangeRule): RuleDetail {
 function evalPrecipFreeHours(
   hoursUntilRain: number | null,
   rule: RangeRule,
+  isRainingNow: boolean,
 ): RuleDetail {
   // No rain in the forecast window → treat as effectively unlimited dry hours.
   const actual = hoursUntilRain ?? 9999;
   const status = evaluateRange(actual, rule, YELLOW_BUFFER.precipFreeHours);
 
-  const valueLabel =
-    hoursUntilRain === null ? "None in forecast" : `${hoursUntilRain}h away`;
-  const reason =
-    status !== "green" && rule.min !== undefined && actual < rule.min
-      ? `Rain in ${hoursUntilRain}h (need ${rule.min}h dry)`
-      : undefined;
+  let valueLabel: string;
+  if (hoursUntilRain === null) {
+    valueLabel = "None in forecast";
+  } else if (hoursUntilRain === 0) {
+    valueLabel = isRainingNow ? "Raining now" : "Within the hour";
+  } else {
+    valueLabel = `${hoursUntilRain}h away`;
+  }
+
+  let reason: string | undefined;
+  if (status !== "green" && rule.min !== undefined && actual < rule.min) {
+    if (hoursUntilRain === 0) {
+      reason = isRainingNow
+        ? `Raining now (need ${rule.min}h dry)`
+        : `Rain within the hour (need ${rule.min}h dry)`;
+    } else {
+      reason = `Rain in ${hoursUntilRain}h (need ${rule.min}h dry)`;
+    }
+  }
 
   return {
     key: "precipFreeHours",
@@ -600,7 +614,11 @@ export function evaluateProject(
   }
   if (rules.precipFreeHours) {
     details.push(
-      evalPrecipFreeHours(forecast.hoursUntilRain, rules.precipFreeHours),
+      evalPrecipFreeHours(
+        forecast.hoursUntilRain,
+        rules.precipFreeHours,
+        current.isRaining,
+      ),
     );
   }
   if (rules.dewPointMargin) {
