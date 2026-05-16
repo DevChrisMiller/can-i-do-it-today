@@ -23,6 +23,8 @@ export interface Project {
   name: string;
   category: ProjectCategory;
   icon: string;
+  description?: string;
+  keywords?: string[];
   status: ProjectStatus;
   statusLabel: string;
   reason: string;

@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
-import type { CheckResponse, Project, ProjectCategory } from "../lib/types";
+import {
+  CATEGORY_LABELS,
+  type CheckResponse,
+  type Project,
+  type ProjectCategory,
+} from "../lib/types";
 import { getCheck, geocodeZip } from "../lib/api";
 import {
   clearLocation,
@@ -121,14 +126,19 @@ export function Dashboard() {
   }, [projects]);
 
   const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
+    const tokens = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
     return projects.filter((p) => {
       if (category !== "all" && p.category !== category) return false;
-      if (!q) return true;
-      return (
-        p.name.toLowerCase().includes(q) ||
-        p.reason.toLowerCase().includes(q)
-      );
+      if (tokens.length === 0) return true;
+      const haystack = [
+        p.name,
+        p.description ?? "",
+        (p.keywords ?? []).join(" "),
+        CATEGORY_LABELS[p.category],
+      ]
+        .join(" ")
+        .toLowerCase();
+      return tokens.every((t) => haystack.includes(t));
     });
   }, [projects, search, category]);
 

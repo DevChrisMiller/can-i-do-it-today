@@ -37,6 +37,7 @@ export interface ProjectDefinition {
   category: string;
   icon: string;
   description: string;
+  keywords?: string[];
   rules: ProjectRules;
   tips: string[];
   seoContent?: string;
@@ -56,6 +57,8 @@ export interface EvaluatedProject {
   name: string;
   category: string;
   icon: string;
+  description: string;
+  keywords: string[];
   status: Status;
   statusLabel: string;
   reason: string;
@@ -647,6 +650,8 @@ export function evaluateProject(
     name: def.name,
     category: def.category,
     icon: def.icon,
+    description: def.description,
+    keywords: def.keywords ?? [],
     status: overall,
     statusLabel: STATUS_LABEL[overall],
     reason: formatOverallReason(details, weather),
