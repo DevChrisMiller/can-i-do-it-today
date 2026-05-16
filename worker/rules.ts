@@ -511,16 +511,43 @@ function findBestWindow(
   return greenHours === 0 ? null : formatWindow(greenHours);
 }
 
+// Forecast hours qualify as "wet" at the same probability threshold weather.ts
+// uses to compute hoursUntilRain (20%). Kept in sync by hand.
+const NEXT_GOOD_DAY_RAIN_PROB = 20;
+
+function hasDryStretchFromDay(
+  hourly: HourlyForecast[],
+  dateKey: string,
+  hoursNeeded: number,
+): boolean {
+  const startIdx = hourly.findIndex((h) => h.startTime.slice(0, 10) === dateKey);
+  if (startIdx < 0) return false;
+  // If the forecast doesn't extend far enough, we can't confirm — don't promise it.
+  if (startIdx + hoursNeeded > hourly.length) return false;
+  for (let i = startIdx; i < startIdx + hoursNeeded; i++) {
+    const h = hourly[i]!;
+    if (h.isRaining) return false;
+    if ((h.precipProbability ?? 0) >= NEXT_GOOD_DAY_RAIN_PROB) return false;
+  }
+  return true;
+}
+
 function findNextGoodDay(
   rules: ProjectRules,
   weather: NormalizedWeather,
 ): string | null {
+  const precipFreeMin = rules.precipFreeHours?.min;
+
   // Skip "Today" — we already report today's status via the card itself.
   for (let i = 1; i < weather.daily.length; i++) {
     const day = weather.daily[i]!;
-    if (evaluateDaySnapshot(rules, day) === "green") {
-      return day.dayLabel;
+    if (evaluateDaySnapshot(rules, day) !== "green") continue;
+    if (precipFreeMin !== undefined && precipFreeMin > 0) {
+      if (!hasDryStretchFromDay(weather.hourly, day.date, precipFreeMin)) {
+        continue;
+      }
     }
+    return day.dayLabel;
   }
   return null;
 }
