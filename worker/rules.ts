@@ -422,8 +422,14 @@ function evaluateHourSnapshot(
       ),
     );
   }
-  if (rules.flags?.includes("noActiveRain") && hour.isRaining) {
-    statuses.push("red");
+  if (rules.flags?.includes("noActiveRain")) {
+    if (hour.isRaining) {
+      statuses.push("red");
+    } else if ((hour.precipProbability ?? 0) >= NEXT_GOOD_DAY_RAIN_PROB) {
+      // Probability-threshold rain matches how hoursUntilRain is computed,
+      // so the "best window" stops where the forecast says rain will start.
+      statuses.push("red");
+    }
   }
 
   return worstStatus(statuses);
@@ -584,10 +590,15 @@ function formatOverallReason(
   if (firstYellow?.reason) return firstYellow.reason;
 
   const c = weather.current;
-  const rainPart =
-    weather.forecast.hoursUntilRain === null
-      ? "no rain in forecast"
-      : `${weather.forecast.hoursUntilRain}h until rain`;
+  const h = weather.forecast.hoursUntilRain;
+  let rainPart: string;
+  if (h === null) {
+    rainPart = "no rain in forecast";
+  } else if (h === 0) {
+    rainPart = c.isRaining ? "raining now" : "rain within the hour";
+  } else {
+    rainPart = `${h}h until rain`;
+  }
   return `${round(c.temperature)}°F, ${c.description.toLowerCase()}, ${rainPart}`;
 }
 
