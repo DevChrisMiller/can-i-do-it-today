@@ -65,6 +65,8 @@ export function Dashboard() {
   }
 
   async function handleZipSubmit(zip: string) {
+    setSearch("");
+    setCategory("all");
     setPhase({ kind: "needs-location", error: null, locating: true });
     try {
       const geo = await geocodeZip(zip);
@@ -85,6 +87,8 @@ export function Dashboard() {
   }
 
   async function handleUseBrowser() {
+    setSearch("");
+    setCategory("all");
     setPhase({ kind: "needs-location", error: null, locating: true });
     try {
       const coords = await getBrowserLocation();
@@ -102,6 +106,8 @@ export function Dashboard() {
   }
 
   function handleChangeLocation() {
+    setSearch("");
+    setCategory("all");
     clearLocation();
     abortRef.current?.abort();
     setPhase({ kind: "needs-location", error: null, locating: false });
